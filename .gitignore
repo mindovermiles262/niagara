@@ -1,0 +1,4 @@
+*.swp
+*.DS_Store
+
+docker/docker-compose4.11.yaml

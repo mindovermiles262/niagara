@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "newChart.fullname" . }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "newChart.labels" . | nindent 4 }}
+spec:
+  replicas:
+  selector:
+    matchLabels:
+      app: niagara
+  template:
+    metadata:
+      labels:
+        app: niagara
+    spec:
+      containers:
+      - name: niagara
+        image: {{ .Values.niagara.image }}:{{ .Values.niagara.tag }}
+        ports:
+        - containerPort: {{ .Values.niagara.port }}

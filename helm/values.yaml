@@ -1,0 +1,14 @@
+namespace: default
+
+niagara:
+  # image: basinsights/nv4.12
+  # tag: "1.0"
+  image: mindovermiles262/niagara
+  tag: "0.0.1"
+  port: 443
+  version: "4.12.0.156"
+
+nginx:
+  image: nginx
+  tag: latest
+  port: 8080
