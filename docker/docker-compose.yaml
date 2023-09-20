@@ -1,0 +1,34 @@
+version: "3"
+services:
+  niagara:
+    image: mindovermiles262/niagara:0.0.2
+    container_name: niagara
+    # TODO: mac_address: 
+    tty: true
+    restart: always
+    volumes:
+      - "./volumes/modules:/opt/Niagara/Niagara-4.12.0.156/modules" # Mount module
+      - "./volumes/licenses:/opt/Niagara/Niagara-4.12.0.156/security/licenses" #Mount licenses
+      - "./volumes/homeSecurity:/home/niagara/Niagara4.12/TridiumEMEA/security" #mount niagara home security for niagara certs and connections
+      - "./volumes/certificates:/opt/Niagara/Niagara-4.12.0.156/security/certificates" #mount platform certificates
+      - "./volumes/station:/home/niagara/Niagara4.12/TridiumEMEA/stations" #mount station for integrity
+      - "./volumes/phrase:/etc/niagara" #Mount passphrase
+      - "./volumes/daemon:/home/niagara/Niagara4.12/TridiumEMEA/daemon" #mount daemon properties for auto start
+      - "/etc/localtime:/etc/localtime:ro" #for timezone
+    ports:
+      # - HOST:CONTAINER
+      - "5011:5011"   # Platform access
+      - "4911:4911"   # Station Access
+      - "443:8443"    # HTTPS
+      - "80:8080"     # HTTP
+      - "465:465"     # Email (SMTP)
+      - "587:587"     # Email (SMTP)
+      - "25:25"       # Email (SMTP)
+      - "502:502/tcp" # modbus
+      - "502:502/udp" # modbus
+  nginx:
+    image: nginx
+    container_name: niagara-nginx
+    ports:
+      # - HOST:CONTAINER
+      - "8080:80"

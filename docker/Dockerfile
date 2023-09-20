@@ -5,6 +5,9 @@ ARG NIAGARA_VERSION="4.12.0.156"
 RUN usermod --shell /bin/bash niagara \
   && echo "niagara:niagara" | chpasswd
 
+# Let give root a passowrd as well
+RUN echo "root:niagara" | chpasswd
+
 # Run the container as user 'niagara'. This elimiates the 
 # "su -l niagara -c /bin/bash -c ..." hoops you were jumping through
 USER niagara
