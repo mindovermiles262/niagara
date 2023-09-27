@@ -1,14 +1,24 @@
 namespace: default
 
 niagara:
-  # image: basinsights/nv4.12
-  # tag: "1.0"
   image: mindovermiles262/niagara
-  tag: "0.0.1"
+  tag: "0.0.3"
   port: 443
   version: "4.12.0.156"
+  platformPort: 5011
+  stationPort: 4911
 
 nginx:
+  enabled: false
   image: nginx
   tag: latest
-  port: 8080
+  containerPort: 80
+
+ingress:
+  enabled: true
+  sslRedirect: false
+  className: traefik
+
+certManager:
+  enabled: true
+  issuerName: letsencrypt

@@ -1,22 +1,37 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "newChart.fullname" . }}
+  name: {{ include "niagara.fullname" . }}
   namespace: {{ .Values.namespace }}
   labels:
-    {{- include "newChart.labels" . | nindent 4 }}
+    {{- include "niagara.labels" . | nindent 4 }}
 spec:
   replicas:
   selector:
     matchLabels:
-      app: niagara
+      app: {{ include "niagara.fullname" . }}
   template:
     metadata:
       labels:
-        app: niagara
+        app: {{ include "niagara.fullname" . }}
     spec:
       containers:
       - name: niagara
         image: {{ .Values.niagara.image }}:{{ .Values.niagara.tag }}
+        tty: true
         ports:
-        - containerPort: {{ .Values.niagara.port }}
+        - name: platform-port
+          protocol: TCP
+          containerPort: {{ .Values.niagara.platformPort }}
+        - name: station-port
+          protocol: TCP
+          containerPort: {{ .Values.niagara.stationPort }}
+      {{- if .Values.nginx.enabled }}
+      - name: nginx
+        image: {{ .Values.nginx.image }}:{{.Values.nginx.tag }}
+        ports:
+          - name: http-port
+            protocol: TCP
+            containerPort: {{ .Values.nginx.containerPort }}
+            hostPort: {{ .Values.nginx.containerPort }}
+      {{- end }}

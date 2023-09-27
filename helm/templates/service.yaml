@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "niagara.fullname" . }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "niagara.labels" . | nindent 4 }}
+spec:
+  selector:
+    app: {{ include "niagara.fullname" . }}
+  ports:
+    - protocol: TCP
+      name: platform-port
+      port: {{ .Values.niagara.platformPort }}
+      targetPort: {{ .Values.niagara.platformPort }}
+    - protocol: TCP
+      name: station-port
+      port: {{ .Values.niagara.stationPort }}
+      targetPort: {{ .Values.niagara.stationPort }}
+    {{- if .Values.nginx.enabled }}
+    - protocol: TCP
+      name: http-port
+      port: 80
+      targetPort: {{ .Values.nginx.containerPort }}
+    {{- end }}

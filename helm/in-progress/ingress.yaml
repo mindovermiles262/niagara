@@ -1,0 +1,25 @@
+{{- if .Values.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    {{- if .Values.certManager.enabled }}
+    cert-manager.io/issuer: {{ .Values.certManager.issuerName }}
+    {{- end }}
+    ingress.kubernetes.io/ssl-redirect: {{ .Values.ingress.sslRedirect | quote }}
+  name: {{ include "niagara.fullname" . }}
+  namespace: {{ .Values.namespace }}
+spec:
+  ingressClassName: {{ .Values.ingress.classname }}
+  rules:
+  - host: "web.ibb-01.test.cns.dev"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: {{ include "niagara.fullname" . }}
+            port:
+              number: {{ .Values.nginx.containerPort }}
+{{- end }}

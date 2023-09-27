@@ -1,0 +1,6 @@
+ports:
+  n4-platform:
+    port: 5011
+    expose: true
+    exposedPort: 5011
+    protocol: TCP
