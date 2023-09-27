@@ -18,5 +18,10 @@ ENV LD_LIBRARY_PATH="/opt/Niagara/Niagara-${NIAGARA_VERSION}/jre/lib/amd64:/opt/
 # Add niagrad to the PATH so we don't have to add the full path
 ENV PATH="$PATH:/opt/Niagara/Niagara-${NIAGARA_VERSION}/bin"
 
+COPY niagara-checks.sh /checks.sh
+
 # Run NiagaraD
-CMD ["niagarad", "/console"]
+# CMD ["niagarad", "/console"]
+CMD /checks.sh; niagarad /console
+
+
