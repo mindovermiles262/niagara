@@ -1,0 +1,14 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: tls-ibb-01-test-cns-dev-ingress
+  namespace: default
+spec:
+  dnsNames:
+  - ibb-01.test.cns.dev
+  - "*.ibb-01.test.cns.dev"
+  issuerRef:
+    group: cert-manager.io
+    kind: Issuer
+    name: letsencrypt
+  secretName: tls-ibb-01-test-cns-dev-ingress

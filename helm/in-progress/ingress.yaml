@@ -1,25 +1,34 @@
-{{- if .Values.ingress.enabled }}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
-    {{- if .Values.certManager.enabled }}
-    cert-manager.io/issuer: {{ .Values.certManager.issuerName }}
-    {{- end }}
-    ingress.kubernetes.io/ssl-redirect: {{ .Values.ingress.sslRedirect | quote }}
-  name: {{ include "niagara.fullname" . }}
-  namespace: {{ .Values.namespace }}
+    traefik.ingress.kubernetes.io/router.entrypoints: n4-platform
+  name: niagara
+  namespace: default
 spec:
-  ingressClassName: {{ .Values.ingress.classname }}
+  ingressClassName: traefik
+  tls:
+  - hosts:
+    - n4.ibb.test.cns.dev
+    secretName: tls-n4-ingress
   rules:
-  - host: "web.ibb-01.test.cns.dev"
+  - host: "n4.ibb-01.test.cns.dev"
     http:
       paths:
       - pathType: Prefix
         path: "/"
         backend:
           service:
-            name: {{ include "niagara.fullname" . }}
+            name: nginx
             port:
-              number: {{ .Values.nginx.containerPort }}
-{{- end }}
+              number: 80
+  - host: "n4.ibb-01.test.cns.dev"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: my-niagara
+            port:
+              number: 5011
