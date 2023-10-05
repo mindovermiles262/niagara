@@ -1,7 +1,7 @@
 version: "3"
 services:
   niagara:
-    image: mindovermiles262/niagara:0.0.2
+    image: mindovermiles262/niagara:0.0.3
     container_name: niagara
     # TODO: mac_address: 
     tty: true

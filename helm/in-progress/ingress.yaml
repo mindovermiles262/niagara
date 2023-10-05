@@ -19,9 +19,9 @@ spec:
         path: "/"
         backend:
           service:
-            name: nginx
+            name: my-niagara
             port:
-              number: 80
+              number: 5011
   - host: "n4.ibb-01.test.cns.dev"
     http:
       paths:
@@ -31,4 +31,14 @@ spec:
           service:
             name: my-niagara
             port:
-              number: 5011
+              number: 4911
+  # - host: "n4.ibb-01.test.cns.dev"
+  #   http:
+  #     paths:
+  #     - pathType: Prefix
+  #       path: "/"
+  #       backend:
+  #         service:
+  #           name: nginx
+  #           port:
+  #             number: 80

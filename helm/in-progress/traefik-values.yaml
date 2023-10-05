@@ -4,3 +4,8 @@ ports:
     expose: true
     exposedPort: 5011
     protocol: TCP
+  n4-station:
+    port: 4911
+    expose: true
+    exposedPort: 4911
+    protocol: TCP
