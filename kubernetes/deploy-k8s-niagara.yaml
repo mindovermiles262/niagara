@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+  name: k8s-niagara
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: k8s-niagara
+  template:
+    metadata:
+      labels:
+        app: k8s-niagara
+    spec:
+      containers:
+      - image: mindovermiles262/niagara:0.0.3
+        imagePullPolicy: IfNotPresent
+        name: niagara
+        tty: true
+        ports:
+        - containerPort: 5011
+          name: platform-port
+          protocol: TCP
+        - containerPort: 4911
+          name: station-port
+          protocol: TCP

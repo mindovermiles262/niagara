@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: n4-platform
+  name: k8s-niagara
+  namespace: default
+spec:
+  ingressClassName: traefik
+  rules:
+  - host: n4.ibb-01.test.cns.dev
+    http:
+      paths:
+      - backend:
+          service:
+            name: k8s-niagara
+            port:
+              number: 5011
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - n4.ibb.test.cns.dev
+    secretName: tls-n4-ingress
+status:
+  loadBalancer: {}

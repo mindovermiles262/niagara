@@ -30,7 +30,7 @@ helm repo update
 helm upgrade --install \
   --namespace traefik \
   --create-namespace \
-  --values traefik-values.yaml \
+  --values ../traefik/traefik-values.yaml \
   traefik \
   traefik/traefik
 
