@@ -1,0 +1,21 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: ingressroutetcp-k8s-niagara
+
+spec:
+  entryPoints:
+    - n4-platform
+  routes:
+    # Match is the rule corresponding to an underlying router.
+    - match: HostSNI(`*`)
+      services:
+        - name: k8s-niagara
+          port: 80
+  tls:
+    domains:
+      - main: ibb-01.test.cns.dev
+        sans:
+          - n4.ibb-01.test.cns.dev
+    secretName: tls-n4-ingress
+    passthrough: false
