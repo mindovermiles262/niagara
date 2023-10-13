@@ -1,3 +1,5 @@
+api:
+  dashboard: true
 ports:
   n4-platform:
     port: 5011

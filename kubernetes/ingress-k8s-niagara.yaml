@@ -3,6 +3,7 @@ kind: Ingress
 metadata:
   annotations:
     traefik.ingress.kubernetes.io/router.entrypoints: n4-platform
+    traefik.ingress.kubernetes.io/router.tls: 'true'
   name: k8s-niagara
   namespace: default
 spec:
@@ -11,11 +12,18 @@ spec:
   - host: n4.ibb-01.test.cns.dev
     http:
       paths:
+      # - backend:
+      #     service:
+      #       name: k8s-niagara
+      #       port:
+      #         number: 5011
+      #   path: /
+      #   pathType: Prefix
       - backend:
           service:
-            name: k8s-niagara
+            name: nginx
             port:
-              number: 5011
+              number: 80
         path: /
         pathType: Prefix
   tls:
